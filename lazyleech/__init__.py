@@ -24,7 +24,7 @@ API_ID = os.environ.get('API_ID')
 API_HASH = os.environ.get('API_HASH')
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 TESTMODE = os.environ.get('TESTMODE')
-# TESTMODE = TESTMODE and TESTMODE != '0'
+TESTMODE = TESTMODE and TESTMODE != '0'
 
 EVERYONE_CHATS = os.environ.get('EVERYONE_CHATS')
 EVERYONE_CHATS = list(map(int, EVERYONE_CHATS.split(' '))) if EVERYONE_CHATS else []
@@ -32,8 +32,8 @@ ADMIN_CHATS = os.environ.get('ADMIN_CHATS')
 ADMIN_CHATS = list(map(int, ADMIN_CHATS.split(' '))) if ADMIN_CHATS else []
 ALL_CHATS = EVERYONE_CHATS + ADMIN_CHATS
 
-PROGRESS_UPDATE_DELAY = int(os.environ.get('PROGRESS_UPDATE_DELAY', 10))
-MAGNET_TIMEOUT = int(os.environ.get('LEECH_TIMEOUT', 60))
+PROGRESS_UPDATE_DELAY = int(os.environ.get('PROGRESS_UPDATE_DELAY', 5))
+MAGNET_TIMEOUT = int(os.environ.get('LEECH_TIMEOUT', 120))
 LEECH_TIMEOUT = int(os.environ.get('LEECH_TIMEOUT', 300))
 
 SOURCE_MESSAGE = '''
