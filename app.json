@@ -22,7 +22,7 @@
         },
         "PROGRESS_UPDATE_DELAY": {
             "description": "Delay for progress and other things",
-            "value": "10",
+            "value": "5",
             "required": false
         },
         "MAGNET_TIMEOUT": {
