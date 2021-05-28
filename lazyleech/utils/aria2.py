@@ -21,7 +21,6 @@ import base64
 import random
 import asyncio
 import tempfile
-import requests
 
 HEX_CHARACTERS = 'abcdef'
 HEXNUMERIC_CHARACTERS = HEX_CHARACTERS + '0123456789'
@@ -86,8 +85,7 @@ async def aria2_add_torrent(session, user_id, link, timeout=0):
         str(user_id),
         str(time.time())
     )
-    return _raise_or_return(await aria2_request(session, 'aria2.addTorrent', [torrent, [], 
-        {
+    return _raise_or_return(await aria2_request(session, 'aria2.addTorrent', [torrent, [], {
         'gid': await generate_gid(session, user_id),
         'dir': dir,
         'seed-time': 0,
@@ -100,31 +98,7 @@ async def aria2_add_magnet(session, user_id, link, timeout=0):
             'dir': tempdir,
             'bt-save-metadata': 'true',
             'bt-metadata-only': 'true',
-            'follow-torrent': 'false',
-            'check-certificate':'false',
-            'bt-max-peers':0,
-            'seed-time':0.01,
-            'min-split-size':'10M',
-            'peer-id-prefix':'-qB4341-',
-            'user-agent':'qBittorrent/4.3.4.1',
-            'disk-cache':'64M',
-            'file-allocation':'prealloc',
-            'continue':'true',
-            'bt-request-peer-speed-limit':'2048K',
-            'auto-file-renaming':'true',
-            'max-tries':20,
-            'bt-enable-lpd':'true',
-            'seed-ratio':0.0,
-            'content-disposition-default-utf8':'true',
-            'http-accept-gzip':'true',
-            'reuse-uri':'true',
-            'max-file-not-found':5,
-            'follow-torrent':'mem',
-            'max-connection-per-server':10,
-            'min-split-size':'10M',
-            'seed-time':0,
-            'max-overall-upload-limit':'1K',
-            'split':10
+            'follow-torrent': 'false'
         }]))
         try:
             info = await aria2_tell_status(session, gid)
