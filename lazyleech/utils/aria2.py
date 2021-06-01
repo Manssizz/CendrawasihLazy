@@ -21,9 +21,38 @@ import base64
 import random
 import asyncio
 import tempfile
+import requests
 
 HEX_CHARACTERS = 'abcdef'
 HEXNUMERIC_CHARACTERS = HEX_CHARACTERS + '0123456789'
+
+def KopyasizListe(string):
+    kopyasiz = list(string.split(","))
+    kopyasiz = list(dict.fromkeys(kopyasiz))
+    return kopyasiz
+
+def Virgullustring(string):
+    string = string.replace("\n\n",",")
+    string = string.replace("\n",",")
+    string = string.replace(",,",",")
+    string = string.rstrip(',')
+    string = string.lstrip(',')
+    return string
+
+tracker_urlsss = [
+    "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt",
+    "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt",
+    "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt"
+    ]
+tumtorrenttrackerstringi = ""
+sonstringtrckr = ""
+for i in range(len(tracker_urlsss)):
+    response = requests.get(tracker_urlsss[i])
+    response.encoding = "utf-8"
+    tumtorrenttrackerstringi += "\n"
+    tumtorrenttrackerstringi += response.text
+trackerlistemiz = KopyasizListe(Virgullustring(tumtorrenttrackerstringi))
+sonstringtrckr = ','.join(trackerlistemiz)
 
 class Aria2Error(Exception):
     def __init__(self, message):
@@ -127,6 +156,7 @@ async def aria2_add_magnet(session, user_id, link, timeout=0):
             'rpc-max-request-size':'1024M',
             'seed-time':'0',
             'max-overall-upload-limit':'1K',
+            'bt-tracker' : f'{sonstringtrckr}',
             'split':'10'
         }]))
         try:
